@@ -6,9 +6,19 @@ type Data = [{
   done: boolean
 }]
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  res.status(200).json([{ name: 'First to do', done: true }])
+  try {
+    fetch(`https://localhost:7167/ToDoList`)
+    .then((res) => res.json())
+    .then((data) => {
+      res.status(200).json(data)
+    })
+	} catch (err) {
+		console.log(err);
+    res.status(500);
+	}
+  
 }

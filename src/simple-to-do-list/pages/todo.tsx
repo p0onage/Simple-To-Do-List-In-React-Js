@@ -5,36 +5,36 @@ import internal from 'stream'
 interface ITodoList {
   itemId: number,
   name: string,
-  done: boolean
+  done: boolean,
+  toggleComplete(): Promise<void>,
+  deleteTodo(): Promise<void>
 }
 
-function Todo({ name, done, toggleComplete, deleteTodo }) {
+function Todo(createTodo : ITodoList) {
   return (
-    <li className="my-4">
       <div className="flex items-center">
-        <span className={done ? 'text-gray-500' : ''}>{name}</span>
+        <span className={createTodo.done ? 'text-gray-500' : ''}>{createTodo.name}</span>
         <button
           type="button"
           className="mx-4 p-1 rounded bg-purple-400 text-white font-bold"
           onClick={(e) => {
             e.preventDefault()
-            toggleComplete()
+            createTodo.toggleComplete()
           }}
         >
-          {done ? 'not done' : 'done'}
+          {createTodo.done ? 'not done' : 'done'}
         </button>
         <button
           type="button"
           onClick={(e) => {
             e.preventDefault()
-            deleteTodo()
+            createTodo.deleteTodo()
           }}
           className=" p-1 bg-red-500 text-white rounded font-bold"
         >
           delete
         </button>
       </div>
-    </li>
   )
 }
 
@@ -54,7 +54,7 @@ function TodoForm() {
     populateToDoList()
   }, [])
 
-  async function addTodo(e) {
+  async function addTodo(e: any) {
     e.preventDefault()
     setDisabled(true)
 
@@ -81,7 +81,7 @@ function TodoForm() {
       
   }
 
-  function handleNewTodo(e) {
+  function handleNewTodo(e: any) {
     e.preventDefault()
     setNewTodo(e.target.value)
   }
@@ -105,13 +105,15 @@ function TodoForm() {
     <form className="bg-white shadow-md rounded p-8" onSubmit={addTodo}>
       <ul>
         {todos.map((todo) => (
-          <Todo
-            key={todo.itemId}
-            name={todo.name}
-            done={todo.done}
-            toggleComplete={() => toggleComplete(todo.itemId, todo)}
-            deleteTodo={() => deleteTodo(todo.itemId)}
-          />
+          <li className="my-4" key={todo.itemId}>
+            <Todo
+              itemId ={todo.itemId}
+              name={todo.name}
+              done={todo.done}
+              toggleComplete={() => toggleComplete(todo.itemId, todo)}
+              deleteTodo={() => deleteTodo(todo.itemId)}
+            />
+          </li>
         ))}
       </ul>
       <div className="flex my-4">
