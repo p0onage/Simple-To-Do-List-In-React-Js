@@ -1,6 +1,6 @@
 # A simple in memory to-do list 
 
-This two stage web app is build with React using Next.JS on the front end along with backend serverless APIs written in c#
+This two stage web app is built with React using Next.JS/Typescript on the front end along with a backend asp.net core 6 API written in c#
 
 ## Running the project 
 
