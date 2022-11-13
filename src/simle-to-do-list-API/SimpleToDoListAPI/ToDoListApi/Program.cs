@@ -14,6 +14,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IToDoListRepository, ToDoListRepository>();
 builder.Services.AddSingleton<IToDoListService,ToDoListService>();
 
+builder.Services.AddSwaggerGen(c => {
+    c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+    c.IgnoreObsoleteActions();
+    c.IgnoreObsoleteProperties();
+    c.CustomSchemaIds(type => type.FullName);
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,10 +30,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

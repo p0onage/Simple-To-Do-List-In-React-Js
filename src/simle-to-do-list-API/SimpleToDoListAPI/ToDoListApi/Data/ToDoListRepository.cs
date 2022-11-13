@@ -18,14 +18,14 @@ public class ToDoListRepository : IToDoListRepository
                 new ToDoList()
                 {
                     Name = "Testdknfdn",
-                    Done = false
+                    done = false
                 }
             };
             _memoryCache.Set(cacheKey, todo);
         }
     }
     
-    public void StoreToDo(IEnumerable<ToDoList> todo)
+    public void UpdateToDoList(IEnumerable<ToDoList> todo)
     {
         _memoryCache.Set(cacheKey, todo);
     }
@@ -42,6 +42,6 @@ public class ToDoListRepository : IToDoListRepository
 
 public interface IToDoListRepository
 {
-    public void StoreToDo(IEnumerable<ToDoList>  todo);
+    public void UpdateToDoList(IEnumerable<ToDoList> todo);
     public IEnumerable<ToDoList> GetToDoList();
 }

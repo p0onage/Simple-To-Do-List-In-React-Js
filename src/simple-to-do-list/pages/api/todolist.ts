@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = [{
+  itemId: number,
   name: string,
   done: boolean
 }]
@@ -11,14 +12,16 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   try {
-    fetch(`https://localhost:7167/ToDoList`)
-    .then((res) => res.json())
-    .then((data) => {
-      res.status(200).json(data)
-    })
+    const fetchTodos = async () => {
+      const response = await fetch("https://localhost:7167/api/ToDoList/GetToDoList");
+      const data = await response.json();
+      return res.status(200).send(data)
+    };
+    fetchTodos();
+
 	} catch (err) {
 		console.log(err);
-    res.status(500);
+    return res.status(500).send({} as Data);
 	}
   
 }
