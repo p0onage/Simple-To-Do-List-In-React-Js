@@ -13,14 +13,7 @@ public class ToDoListRepository : IToDoListRepository
         _memoryCache = memoryCache;
         if (!_memoryCache.TryGetValue(cacheKey, out IEnumerable<ToDoList> cacheValue))
         {
-            var todo = new List<ToDoList>()
-            {
-                new ToDoList()
-                {
-                    Name = "Testdknfdn",
-                    done = false
-                }
-            };
+            var todo = new List<ToDoList>();
             _memoryCache.Set(cacheKey, todo);
         }
     }
