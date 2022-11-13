@@ -8,7 +8,7 @@ both the front end and back end need to run. To start the front end react app yo
 
 `cd 'src/simple-to-do-list'`
 
-`npx run dev`
+`npx run dev` or `npm run dev`
 
 You can run the backend API by using the .Net CLI. First build the solution and then run the dll
 
